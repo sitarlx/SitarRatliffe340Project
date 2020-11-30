@@ -8,40 +8,44 @@
 //To run program...
 //	./test <int arg1>
 
-
-
-struct timespec start, stop;
-double elapsed;
-int step = 8;
-
 int main(int argc, char** argv) {
-	if (argc != 2){
-		printf("Usage: ./test <arraySize>\n");
+	if (argc != 3){
+		printf("Usage: ./test <arraySize> <stepSize>\n");
 		return 1;
 	}
     	else {
 		FILE *fp = fopen("Report.txt", "w");
-	    	long aSize = atoi(argv[1]);
+	    	long aSize = atol(argv[1]);
+	    	long max_step = atol(argv[2]);
 	    	printf("aSize = %lu\n", aSize);
-	    	int n[aSize];
+	    	
+	    	struct timespec start, stop;
+	    	long x;
+	    	double elapsed;
 			
-			//populate array
-	    	for (int t = 0; t < aSize; t++) {
-	    		n[t] = 420;
-	    	}
+		//populate array
 	    	
 	    	// loop for main mem access
-	    	for (int i = 1; i < step; i++) {
-				// take time here
-				clock_gettime(CLOCK_REALTIME, &start);
-	    		for (int j = 0; j < aSize; j++) {
-					// acess array here
+	    	for (long step = 1; step <= max_step; step++) {
+	    		x = 0;
+	    		long bSize = aSize * step;
+	    		long *n = (long*)malloc(bSize*sizeof(long));
+	    		
+	    		for (long t = 0; t < bSize; t++) {
+	    			n[t] = rand();
 	    		}
+			// take time here
+			clock_gettime(CLOCK_MONOTONIC, &start);
+	    		for (long j = 0; j < bSize; j+=step) {
+				x = x + n[j];
+	    		}
+	    		
 	    		// take time here
-				clock_gettime(CLOCK_REALTIME, &stop);
-				elapsed = stop.tv_sec - start.tv_sec;
-				elapsed += (stop.tv_nsec - start.tv_nsec) / 1000000000.0;
-				fprintf(fp, "Access time for i = %d is %.1fms\n", i, elapsed * 1000);
+			clock_gettime(CLOCK_MONOTONIC, &stop);
+			elapsed = stop.tv_nsec - start.tv_nsec;
+			elapsed += (stop.tv_sec - start.tv_sec) * 1000000000.0;
+			fprintf(fp, "Mean access time for step = %ld is %.1lfns. With value %ld\n", step, elapsed/aSize, x);
+			free(n);
 	    	}
 		fclose(fp);	   
 	}
