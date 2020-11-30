@@ -20,7 +20,7 @@ int main(int argc, char** argv) {
 		return 1;
 	}
     	else {
-			FILE *fp = fopen("Report.txt", "w");
+		FILE *fp = fopen("Report.txt", "w");
 	    	long aSize = atoi(argv[1]);
 	    	printf("aSize = %lu\n", aSize);
 	    	int n[aSize];
