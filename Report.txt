@@ -1,0 +1,7 @@
+Access time for i = 1 is 0.0ms
+Access time for i = 2 is 0.0ms
+Access time for i = 3 is 0.0ms
+Access time for i = 4 is 0.0ms
+Access time for i = 5 is 0.0ms
+Access time for i = 6 is 0.0ms
+Access time for i = 7 is 0.0ms
