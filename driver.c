@@ -1,12 +1,17 @@
+// Logan Sitar and Ryan Ratliffe
+
 // driver class
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
-//To compile program...
-//	gcc -Wall -o test driver.c
-//To run program...
-//	./test <int arg1> <int arg2>
+//To compile and run program using Makefile...
+//	open terminal
+//	cd to directoryName
+//	make all			"compiles the code"
+//	make run			"runs the code"
+//	make clean			"removes unecessary files"
+
 long max_its = 10000;
 int byte = 1024;
 int main(int argc, char** argv){
