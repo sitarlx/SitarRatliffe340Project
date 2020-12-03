@@ -11,7 +11,7 @@ long max_its = 10000;
 int main(int argc, char** argv) {
 	
 	// check correct num args
-	if (argc != 3){
+	if (argc != 4){
 		printf("Usage: ./test <arraySize> <stepSize>\n");
 		return 1;
 	}
@@ -62,7 +62,30 @@ int main(int argc, char** argv) {
 		fclose(fp);	  
 		printf("this is the sum of x: %lf", sum_x);
 	}
-    	return 0;
+	
+	//CACHE SIZE PART
+	int i;
+	int j;
+
+	int max_MB = atol(argv[3]);
+	struct timespec beg, end;
+	for(j = 1; j<max_MB;j++){
+		int steps = j * 1024 * 1024;
+	    	int arr[1024 * 1024];
+	    	int lengthMod = (1024 * 1024) - 1;
+	   	
+	    	double timeTaken;
+	    	
+	    	clock_gettime(CLOCK_MONOTONIC, &beg);
+	    	for (i = 0; i < steps; i++) {
+	       	arr[(i * 16) & lengthMod]++;
+	    	}
+	    	clock_gettime(CLOCK_MONOTONIC, &end);
+	    	timeTaken = end.tv_nsec - beg.tv_nsec;
+	    	printf("\nTime for %d: %.12f \n", i, timeTaken/j);
+		
+	}
+	return 0;
 }
 
 // cache block size function
