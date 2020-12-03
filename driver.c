@@ -8,83 +8,85 @@
 //To run program...
 //	./test <int arg1> <int arg2>
 long max_its = 10000;
-int main(int argc, char** argv) {
-	
+int byte = 1024;
+int main(int argc, char** argv){
 	// check correct num args
 	if (argc != 4){
 		printf("Usage: ./test <arraySize> <stepSize>\n");
 		return 1;
 	}
 	else {
-		FILE *fp = fopen("Report.txt", "w");
-		long aSize = atol(argv[1]);
-		long max_step = atol(argv[2]);
-		double m[max_step];
-		struct timespec start, stop;
-	    	long x;
-	  	double elapsed;
-	  	  
-		double sum_x = 0;	
-		printf("size of long = %ld\n", sizeof(long));
-	  	 // loop for main mem access
-	   	 for (long step = 1; step <= max_step; step++) {
-	    		long bSize = aSize * step;
-			//populate array
-	    		m[step-1] = 0;
-	    		
-			for (long k = 0; k < max_its; k++) {
-				long *n = (long*)malloc(bSize*sizeof(long));
-				x = 0;
-				//for (long t = 0; t < bSize; t++) {
-	    				//n[t] = rand();
-	    			//}
-	    			
-				// take time here
-		    		clock_gettime(CLOCK_MONOTONIC, &start);
-		    		for (long j = 0; j < bSize; j+=step) {	
-					x = x + n[j];	
-		    		}
-		    		// take time here
-				clock_gettime(CLOCK_MONOTONIC, &stop);
-				elapsed = stop.tv_nsec - start.tv_nsec;
-				elapsed += (stop.tv_sec - start.tv_sec) * 1000000000.0;
-				m[step - 1] += (elapsed/aSize);
-	    			
-				sum_x +=x;
-				free(n);
-			} //end of k loop
-			
-	  	} // end of step loop
-	  	for(long z = 1;z<max_step;z++){
-	  		m[z-1] = m[z-1]/max_its;
-	  		fprintf(fp, "Mean access time for step = %ld bytes is %.1lfns. \n", z*sizeof(long), m[z-1]);
-	  	}
-		fclose(fp);	  
-		printf("this is the sum of x: %lf", sum_x);
+	long aSize = atol(argv[1]);
+	long max_step = atol(argv[2]);
+	blockSize_accessTime(aSize, max_step);
+	int max_MB = atol(argv[3]);
+	cacheSize(max_MB);
+	return 0;
 	}
-	
+}
+
+int blockSize_accessTime(long aSize, long max_step) {
+	FILE *fp = fopen("blockReport.txt", "w");
+	double m[max_step];
+	struct timespec start, stop;
+    	long x;
+  	double elapsed;	  
+	double sum_x = 0;	
+  	// loop for main mem access
+   	for (long step = 1; step <= max_step; step++) {
+    		long bSize = aSize * step;
+		//populate array
+    		m[step-1] = 0;
+		for (long k = 0; k < max_its; k++) {
+			long *n = (long*)malloc(bSize*sizeof(long));
+			x = 0;
+			// take time here
+	    		clock_gettime(CLOCK_MONOTONIC, &start);
+	    		for (long j = 0; j < bSize; j+=step) {	
+				x = x + n[j];	
+	    		}
+	    		// take time here
+			clock_gettime(CLOCK_MONOTONIC, &stop);
+			elapsed = stop.tv_nsec - start.tv_nsec;
+			elapsed += (stop.tv_sec - start.tv_sec) * 1000000000.0;
+			m[step - 1] += (elapsed/aSize);
+    			
+			sum_x +=x;
+			free(n);
+		} //end of k loop
+  	} // end of step loop
+  	
+  	//outputs results
+  	for(long z = 1;z<max_step;z++){
+  		m[z-1] = m[z-1]/max_its;
+  		fprintf(fp, "Mean access time for step = %ld bytes is %.1lfns. \n", z*sizeof(long), m[z-1]);
+  	}
+  	
+	fclose(fp);
+	return 0;
+}
+
+
+int cacheSize(int max_MB) {
 	//CACHE SIZE PART
+	FILE *fp2 = fopen("cacheReport.txt", "w");
 	int i;
 	int j;
-
-	int max_MB = atol(argv[3]);
 	struct timespec beg, end;
 	for(j = 1; j<max_MB;j++){
-		int steps = j * 1024 * 1024;
-	    	int arr[1024 * 1024];
-	    	int lengthMod = (1024 * 1024) - 1;
-	   	
-	    	double timeTaken;
-	    	
+		int jumps = j * byte * byte;
+	    	int a[byte * byte];
+	    	int len = (byte * byte) - 1;
+	    	double elapsed;
 	    	clock_gettime(CLOCK_MONOTONIC, &beg);
-	    	for (i = 0; i < steps; i++) {
-	       	arr[(i * 16) & lengthMod]++;
+	    	for (i = 0; i < jumps; i++) {
+	       	a[(i * 16) & len]++;
 	    	}
 	    	clock_gettime(CLOCK_MONOTONIC, &end);
-	    	timeTaken = end.tv_nsec - beg.tv_nsec;
-	    	printf("\nTime for %d: %.12f \n", i, timeTaken/j);
-		
+	    	elapsed = end.tv_nsec - beg.tv_nsec;
+	    	fprintf(fp2, "\nTime for %d: %.12f \n", i, (elapsed/j)/1000000000.0);
 	}
+	fclose(fp2);
 	return 0;
 }
 
