@@ -1,27 +1,42 @@
+// Logan Sitar and Ryan Ratliffe
+
 // driver class
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
+<<<<<<< HEAD
 //To compile program...
 //	gcc -Wall -o test driver.c
 //To run program...
 //	./test <int arg1> <int arg2> <int arg3>
+=======
+//To compile and run program using Makefile...
+//	open terminal
+//	cd to directoryName
+//	make all			"compiles the code"
+//	make run			"runs the code"
+//	make blockReport		"shows the results, press 'q' to exit"
+//	make cacheReport		"shows the results, press 'q' to exit"
+//	make clean			"removes unecessary files"
+//To change given inputs, open Makefile and change values of ARGS
+
+>>>>>>> b5bd3c1604a5e584110377eba335a0bb0391b909
 long max_its = 10000;
 int byte = 1024;
 int main(int argc, char** argv){
 	// check correct num args
 	if (argc != 4){
-		printf("Usage: ./test <arraySize> <stepSize>\n");
+		printf("Usage: ./test <arraySize> <stepSize> <maxMBSize>\n");
 		return 1;
 	}
 	else {
-	long aSize = atol(argv[1]);
-	long max_step = atol(argv[2]);
-	blockSize_accessTime(aSize, max_step);
-	int max_MB = atol(argv[3]);
-	cacheSize(max_MB);
-	return 0;
+		long aSize = atol(argv[1]);
+		long max_step = atol(argv[2]);
+		blockSize_accessTime(aSize, max_step);
+		int max_MB = atol(argv[3]);
+		cacheSize(max_MB);
+		return 0;
 	}
 }
 
