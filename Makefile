@@ -1,23 +1,19 @@
 CC=gcc
-CFLAGS=-c -Wall -g
-LASTNAME=leclerc
+CFLAGS=-Wall -o
 
-all: hw1
+all: test
 
-hw1: utils.o hw1.o
-	$(CC) -g utils.o hw1.o -o hw1 -lm
+test: driver.o
+	$(CC) $(CFLAGS) test -O2 driver.o
 
-utils.o: utils.c utils.h
-	$(CC) $(CFLAGS) utils.c
-
-hw1.o: hw1.c utils.h
-	$(CC) $(CFLAGS) hw1.c
+driver.o: driver.c
+	$(CC) -c driver.c
 
 clean:
-	/bin/rm -f hw1 utils.o hw1.o $(LASTNAME).tar.gz
-
+	rm -rf *o test
+	
 run:
-	./hw1 vectors.txt
-
+	./test 10000 16
+	
 tarball:
-	tar -czvf $(LASTNAME).tar.gz hw1.c utils.c utils.h
+	tar -czvf sitar.tar.gz driver.c Makefile README.txt Report.txt
