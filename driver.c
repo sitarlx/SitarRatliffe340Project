@@ -1,16 +1,7 @@
-// Logan Sitar and Ryan Ratliffe
-
-// driver class
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
-<<<<<<< HEAD
-//To compile program...
-//	gcc -Wall -o test driver.c
-//To run program...
-//	./test <int arg1> <int arg2> <int arg3>
-=======
 //To compile and run program using Makefile...
 //	open terminal
 //	cd to directoryName
@@ -21,7 +12,7 @@
 //	make clean			"removes unecessary files"
 //To change given inputs, open Makefile and change values of ARGS
 
->>>>>>> b5bd3c1604a5e584110377eba335a0bb0391b909
+
 long max_its = 10000;
 int byte = 1024;
 int main(int argc, char** argv){
