@@ -6,7 +6,7 @@
 //To compile program...
 //	gcc -Wall -o test driver.c
 //To run program...
-//	./test <int arg1> <int arg2>
+//	./test <int arg1> <int arg2> <int arg3>
 long max_its = 10000;
 int byte = 1024;
 int main(int argc, char** argv){
@@ -61,11 +61,9 @@ int blockSize_accessTime(long aSize, long max_step) {
   		m[z-1] = m[z-1]/max_its;
   		fprintf(fp, "Mean access time for step = %ld bytes is %.1lfns. \n", z*sizeof(long), m[z-1]);
   	}
-  	
 	fclose(fp);
 	return 0;
 }
-
 
 int cacheSize(int max_MB) {
 	//CACHE SIZE PART
@@ -84,16 +82,13 @@ int cacheSize(int max_MB) {
 	    	}
 	    	clock_gettime(CLOCK_MONOTONIC, &end);
 	    	elapsed = end.tv_nsec - beg.tv_nsec;
-	    	fprintf(fp2, "\nTime for %d: %.12f \n", i, (elapsed/j)/1000000000.0);
+	    	fprintf(fp2, "Time for %d: %.12f      (with %ld/%ld)\n", i, (elapsed/j)/1000000000.0, beg.tv_nsec, end.tv_nsec);
 	}
 	fclose(fp2);
 	return 0;
 }
 
 // cache block size function
-
 // cache size function
-
 // main memory access time function
-
 // cache memory access time function
