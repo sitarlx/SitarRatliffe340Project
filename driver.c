@@ -10,23 +10,26 @@
 //	cd to directoryName
 //	make all			"compiles the code"
 //	make run			"runs the code"
+//	make blockReport		"shows the results, press 'q' to exit"
+//	make cacheReport		"shows the results, press 'q' to exit"
 //	make clean			"removes unecessary files"
+//To change given inputs, open Makefile and change values of ARGS
 
 long max_its = 10000;
 int byte = 1024;
 int main(int argc, char** argv){
 	// check correct num args
 	if (argc != 4){
-		printf("Usage: ./test <arraySize> <stepSize>\n");
+		printf("Usage: ./test <arraySize> <stepSize> <maxMBSize>\n");
 		return 1;
 	}
 	else {
-	long aSize = atol(argv[1]);
-	long max_step = atol(argv[2]);
-	blockSize_accessTime(aSize, max_step);
-	int max_MB = atol(argv[3]);
-	cacheSize(max_MB);
-	return 0;
+		long aSize = atol(argv[1]);
+		long max_step = atol(argv[2]);
+		blockSize_accessTime(aSize, max_step);
+		int max_MB = atol(argv[3]);
+		cacheSize(max_MB);
+		return 0;
 	}
 }
 

@@ -1,5 +1,9 @@
+# c compiler
 CC=gcc
+# c flags to always include
 CFLAGS=-Wall -o
+# <arraySize> <maxStepSize> <maxMBSize>
+ARGS=10000 33 64
 
 all: test
 
@@ -13,7 +17,13 @@ clean:
 	rm -rf *o test
 	
 run:
-	./test 10000 16
+	./test $(ARGS)
 	
 tarball:
-	tar -czvf sitar.tar.gz driver.c Makefile README.txt Report.txt
+	tar -czvf sitar.tar.gz driver.c Makefile README.txt blockReport.txt cacheReport.txt
+	
+blockReport:
+	less blockReport.txt
+
+cacheReport:
+	less cacheReport.txt
