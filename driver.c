@@ -12,7 +12,6 @@
 //	make clean			"removes unecessary files"
 //To change given inputs, open Makefile and change values of ARGS
 
-
 long max_its = 10000;
 int byte = 1024;
 int main(int argc, char** argv){
