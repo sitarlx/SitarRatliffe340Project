@@ -1,4 +1,6 @@
 SitarRatliffe340Project
+to run code refer to the first comment on the "driver.c" file. The project is built using makeFile.
+
 
 Questions to Answer:
 1. How big is a cache block?
