@@ -1,7 +1,7 @@
 # c compiler
 CC=gcc
 # c flags to always include
-CFLAGS=-Wall -o
+CFLAGS=-o
 # <arraySize> <maxStepSize> <maxMBSize>
 ARGS=10000 33 64
 
