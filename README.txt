@@ -1,5 +1,5 @@
 SitarRatliffe340Project
-to run code refer to the first comment on the "driver.c" file. The project is built using makeFile.
+To run code refer to the first comment on the "driver.c" file. The project is built using a Makefile.
 
 
 Questions to Answer:
